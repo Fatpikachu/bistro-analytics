@@ -2,7 +2,12 @@
 const mongoose = require('mongoose');
 
 // Require configurations
-const config = require('../config/mongo');
+let config = null;
+if (!process.env.MONGODB_URI) {
+  config = require('../config/mongo');
+} else {
+  config = process.env.MONGODB_URI
+}
 
 // Connect to MongoDB database
 mongoose.connect(config.dbUri);

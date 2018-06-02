@@ -1,13 +1,24 @@
 const Sequelize = require('sequelize');
 const DataTypes = require('sequelize/lib/data-types');
 
-const {
-  database,
-  username,
-  password,
-  host,
-  port,
-} = require('../config/rds.js');
+
+// Require configurations
+let config = null;
+let database, username, password, host, port = null;
+if (!process.env.RDSDB) {
+  let config = require('../config/rds');
+  database = config.database;
+  username = config.username;
+  password = config.password;
+  host = config.host;
+  port = config.port;
+} else {
+  database = process.env.RSDB;
+  username = process.env.RSDB_USERNAME;
+  password = process.env.RSDB_PASS;
+  host = process.env.RSDB_HOST;
+  port = process.env.RSDB_PORT;
+}
 
 const sequelize = new Sequelize(database, username, password, {
   host,
