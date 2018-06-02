@@ -156,7 +156,7 @@ const analytics = {
     });
 
     Analysis.findOneAndUpdate({
-      restaurantId: 24,
+      restaurantId: restaurant_id,
     }, analysis, { upsert: true }, (err, res) => {
       // Deal with the response data/error
       if (err) {
