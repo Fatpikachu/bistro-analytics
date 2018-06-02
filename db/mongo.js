@@ -2,15 +2,16 @@
 const mongoose = require('mongoose');
 
 // Require configurations
-let config = null;
+let dbUri = null;
 if (!process.env.MONGODB_URI) {
   config = require('../config/mongo');
+  dbUri = config.dbUri;
 } else {
-  config = process.env.MONGODB_URI
+  dbUri = process.env.MONGODB_URI
 }
 
 // Connect to MongoDB database
-mongoose.connect(config.dbUri);
+mongoose.connect(dbUri);
 const db = mongoose.connection;
 
 //
