@@ -159,7 +159,9 @@ const analytics = {
       restaurantId: 24,
     }, analysis, { upsert: true }, (err, res) => {
       // Deal with the response data/error
-      console.log(res);
+      if (err) {
+        console.log(err);
+      }
     });
   },
 };
