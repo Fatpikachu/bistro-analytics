@@ -13,9 +13,7 @@ if (!process.env.SERVER_SECRET) {
 }
 
 const app = express();
-
 const port = process.env.PORT || 3000;
-process.on('unhandledRejection', r => console.log(r));
 
 app.use(cors());
 
@@ -64,7 +62,6 @@ app.get('/wake/:secret', async (req, res) => {
       res.status(400).send('GO AWAY');
     }
 });
-
 
 // Note: the below console.log is intentional, and required for minimal server logging.
 const server = app.listen(port, () => {
