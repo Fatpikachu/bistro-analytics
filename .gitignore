@@ -1,0 +1,7 @@
+config/*
+!config/.keep
+
+node_modules
+
+.DS_Store
+.ds_store
