@@ -5,7 +5,7 @@ const DataTypes = require('sequelize/lib/data-types');
 // Require configurations
 let config = null;
 let database, username, password, host, port = null;
-if (!process.env.RDSDB) {
+if (!process.env.RSDB) {
   let config = require('../config/rds');
   database = config.database;
   username = config.username;
