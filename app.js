@@ -4,10 +4,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const analytics = require('./analytics');
 
-
-// Require database connection
-// const db = require('./db/');
-
+// Require configurations
+let primarySeverSecret = null;
+if (!process.env.SERVER_SECRET) {
+  config = require('../config/mongo');
+  primarySeverSecret = config.primarySeverSecret;
+} else {
+  primarySeverSecret = process.env.SERVER_SECRET
+}
 
 const app = express();
 
@@ -55,10 +59,15 @@ const protectRoutes = type => function (req, res, next) {
 // app.use('/customers', protectRoutes('Customer'));
 // app.use('/', routes);
 
-app.post('/build/:id', async (req, res) => {
-  let {id} = req.params;
-  let response = await analytics.buildData();
-  res.status(200).send('OK');
+app.post('/build/:id/:secret', async (req, res) => {
+  let {id, secret} = req.params;
+
+  if (secret === primarySeverSecret) {
+    let response = await analytics.buildData();
+    res.status(200).send('OK');
+  } else {
+    res.status(400).send('NO');
+  }
 });
 
 app.get('/data/:id', async (req, res) => {
