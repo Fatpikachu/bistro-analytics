@@ -46,7 +46,7 @@ app.get('/data/:id/:secret', async (req, res) => {
       fetchData(id).then((data) => {
         console.log(data);
         // console.log(response);
-        res.status(200).send(data);
+        res.status(200).send(data[0].analytics);
       }).catch((err) => {
         console.log(err);
         res.status(400).send('NO');
