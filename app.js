@@ -7,7 +7,7 @@ const analytics = require('./analytics');
 // Require configurations
 let primarySeverSecret = null;
 if (!process.env.SERVER_SECRET) {
-  config = require('../config/secrets');
+  config = require('./config/secrets');
   primarySeverSecret = config.primarySeverSecret;
 } else {
   primarySeverSecret = process.env.SERVER_SECRET
