@@ -155,7 +155,6 @@ const analytics = {
       analytics: analyticsData,
     });
 
-    console.log('reached this');
     Analysis.findOneAndUpdate({
       restaurantId: restaurant_id,
     }, {
