@@ -56,6 +56,15 @@ app.get('/data/:id/:secret', async (req, res) => {
     }
 });
 
+app.get('/wakeup/:secret', async (req, res) => {
+  let {secret} = req.params;
+    if (secret === primaryServerSecret) {
+        res.status(400).send('OK');
+    } else {
+      res.status(400).send('GO AWAY');
+    }
+});
+
 
 // Note: the below console.log is intentional, and required for minimal server logging.
 const server = app.listen(port, () => {
