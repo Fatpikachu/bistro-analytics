@@ -1,16 +1,15 @@
 const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const cors = require('cors');
-const analytics = require('./analytics');
+const { fetchData, buildData} = require('./analytics');
 
 // Require configurations
-let primarySeverSecret = null;
+let primaryServerSecret = null;
 if (!process.env.SERVER_SECRET) {
   config = require('./config/secrets');
-  primarySeverSecret = config.primarySeverSecret;
+  primaryServerSecret = config.primaryServerSecret;
 } else {
-  primarySeverSecret = process.env.SERVER_SECRET
+  primaryServerSecret = process.env.SERVER_SECRET
 }
 
 const app = express();
@@ -20,8 +19,8 @@ process.on('unhandledRejection', r => console.log(r));
 
 app.use(cors());
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
 
 // Simple loggin middleware
 app.use('*', (req, res, next) => {
@@ -32,18 +31,29 @@ app.use('*', (req, res, next) => {
 app.post('/build/:id/:secret', async (req, res) => {
   let {id, secret} = req.params;
 
-  if (secret === primarySeverSecret) {
-    let response = await analytics.buildData(id);
+  if (secret === primaryServerSecret) {
+    let response = await buildData(id);
     res.status(200).send('OK');
   } else {
     res.status(400).send('NO');
   }
 });
 
-app.get('/data/:id', async (req, res) => {
-  let {id} = req.params;
-  let response = await analytics.fetchData(id);
-  res.status(200).send(response);
+app.get('/data/:id/:secret', async (req, res) => {
+  let {id, secret} = req.params;
+    if (secret === primaryServerSecret) {
+      // let response = await fetchData(id);
+      fetchData(id).then((data) => {
+        console.log(data);
+      }).catch((err) => {
+        console.log(err);
+      });
+      // console.log(response);
+      res.status(200).send('OK');
+      // res.status(200).send(response);
+    } else {
+      res.status(400).send('NO');
+    }
 });
 
 

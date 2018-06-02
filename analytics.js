@@ -155,13 +155,16 @@ const analytics = {
       analytics: analyticsData,
     });
 
+    console.log('reached this');
     Analysis.findOneAndUpdate({
       restaurantId: restaurant_id,
-    }, analysis, { upsert: true }, (err, res) => {
+    }, {
+      analytics: JSON.stringify(analyticsData)
+    }, { upsert: true }, (err, res) => {
       // Deal with the response data/error
       if (err) {
         console.log(err);
-      }
+      } 
     });
   },
 };
