@@ -56,7 +56,7 @@ app.get('/data/:id/:secret', async (req, res) => {
     }
 });
 
-app.get('/wakeup/:secret', async (req, res) => {
+app.get('/wake/:secret', async (req, res) => {
   let {secret} = req.params;
     if (secret === primaryServerSecret) {
         res.status(400).send('OK');
