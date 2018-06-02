@@ -33,7 +33,7 @@ app.post('/build/:id/:secret', async (req, res) => {
   let {id, secret} = req.params;
 
   if (secret === primarySeverSecret) {
-    let response = await analytics.buildData();
+    let response = await analytics.buildData(id);
     res.status(200).send('OK');
   } else {
     res.status(400).send('NO');
