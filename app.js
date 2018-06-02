@@ -45,12 +45,12 @@ app.get('/data/:id/:secret', async (req, res) => {
       // let response = await fetchData(id);
       fetchData(id).then((data) => {
         console.log(data);
+        // console.log(response);
+        res.status(200).send(data);
       }).catch((err) => {
         console.log(err);
+        res.status(400).send('NO');
       });
-      // console.log(response);
-      res.status(200).send('OK');
-      // res.status(200).send(response);
     } else {
       res.status(400).send('NO');
     }
